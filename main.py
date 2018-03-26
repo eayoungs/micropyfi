@@ -31,7 +31,7 @@ while True:
         if not line or line == b'\r\n':
             break
     rows = ['<tr><td>%s</td><td>%d</td></tr>' % (str(p), p.value()) for p in pins]
-    rows.append('<tr><td>%s</td><td>%d</td></tr>' % ('ADC(0)', adc))
+    rows.append('<tr><td>%s</td><td>%d</td></tr>' % ('ADC(0)', adc.value()))
     response = html % '\n'.join(rows)
     cl.send(response)
     cl.close()
