@@ -25,6 +25,6 @@ while True:
     rows = [p.value() for p in pins]
     rows.append(adc.read())
 
-    response = html % '\n'.join(rows)
+    response = rows
     cl.send(response)
     cl.close()
