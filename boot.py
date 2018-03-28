@@ -8,10 +8,9 @@ import webrepl
 gc.collect()
 
 def do_connect():
-    from network import WLAN
-    wlan = WLAN()
-    sta_if = wlan(network.STA_IF)
-    # wlan.ifconfig(config=('192.168.0.111', '255.255.255.0', '192.168.0.1',
+    import network
+    sta_if = network.WLAN(network.STA_IF)
+    # sta_if.ifconfig(config=('192.168.0.111', '255.255.255.0', '192.168.0.1',
     #                  '8.8.8.8'))
     if not sta_if.isconnected():
         print('connecting to network...')
