@@ -1,5 +1,6 @@
 import machine
 import socket
+import json
 
 
 pins = [machine.Pin(i, machine.Pin.IN) for i in (0, 2, 4, 5, 12, 13, 14, 15)]
@@ -35,6 +36,7 @@ while True:
 
     response_dict = dict([(str(p), p.value()) for p in pins])
     response_dict['ADC(0)'] = adc.read()
+    json_response = json.loads(response_dict).encode('utf-8')
 
     response = html % '\n'.join(rows)
     cl.send(response)
