@@ -36,7 +36,7 @@ while True:
 
     response_dict = dict([(str(p), p.value()) for p in pins])
     response_dict['ADC(0)'] = adc.read()
-    json_response = json.loads(response_dict).encode('utf-8')
+    json_response = ujson.dumps(response_dict)
 
     response = html % '\n'.join(rows)
     cl.send(response)
