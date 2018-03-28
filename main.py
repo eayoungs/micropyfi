@@ -34,8 +34,8 @@ while True:
     rows.append('<tr><td>%s</td><td>%d</td></tr>' % ('ADC(0)', adc.read()))
 
     response_dict = dict((str(p): p.value()) for pin_name, pin_value in pins)
-    response_dict['ADC(0)'] = adc.read()
-    json_response = json.loads(response_dict).encode('utf-8')
+    # response_dict['ADC(0)'] = adc.read()
+    # json_response = json.loads(response_dict).encode('utf-8')
 
     response = html % '\n'.join(rows)
     cl.send(response)
