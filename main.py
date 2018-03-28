@@ -39,5 +39,5 @@ while True:
     json_response = ujson.dumps(response_dict)
 
     response = html % '\n'.join(rows)
-    cl.send(response)
+    cl.send(json_response)
     cl.close()
