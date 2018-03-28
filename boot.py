@@ -10,8 +10,8 @@ gc.collect()
 def do_connect():
     import network
     sta_if = network.WLAN(network.STA_IF)
-    # network.WLAN.ifconfig(config=('192.168.0.111', '255.255.255.0', '192.168.0.1',
-    #                  '8.8.8.8'))
+    network.WLAN.ifconfig(config=('fixed_ip', '255.255.255.0',
+                                  'router_ip', 'router_ip'))
     if not sta_if.isconnected():
         print('connecting to network...')
         sta_if.active(True)
