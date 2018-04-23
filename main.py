@@ -34,6 +34,8 @@ while True:
     response_dict = dict([(str(p), p.value()) for p in pins])
     response_dict['ADC(0)'] = adc.read()
     json_response = ujson.dumps(response_dict)
+
+    file_len('pin.log')
  
     with open(fname, mode='w', encoding='utf-8') as f:
         f.write(json_response)
