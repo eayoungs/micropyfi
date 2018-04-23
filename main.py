@@ -16,6 +16,12 @@ print('listening on', addr)
 
 f_name = "pin.log"
 
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+        return i + 1
+
 while True:
     cl, addr = s.accept()
     print('client connected from', addr)
