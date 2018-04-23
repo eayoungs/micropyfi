@@ -6,15 +6,6 @@ import ujson
 pins = [machine.Pin(i, machine.Pin.IN) for i in (0, 2, 4, 5, 12, 13, 14, 15)]
 adc = machine.ADC(0)
 
-html = """<!DOCTYPE html>
-<html>
-    <head> <title>ESP8266 Pins</title> </head>
-    <body> <h1>ESP8266 Pins</h1>
-        <table border="1"> <tr><th>Pin</th><th>Value</th></tr> %s </table>
-    </body>
-</html>
-"""
-
 addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
 
 s = socket.socket()
@@ -23,21 +14,34 @@ s.listen(1)
 
 print('listening on', addr)
 
-while True:
-    cl, addr = s.accept()
-    print('client connected from', addr)
-    cl_file = cl.makefile('rwb', 0)
+f_name = "adc.log"
+
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+        return i + 1
+
     while True:
-        line = cl_file.readline()
-        if not line or line == b'\r\n':
-            break
-    rows = ['<tr><td>%s</td><td>%d</td></tr>' % (str(p), p.value()) for p in pins]
-    rows.append('<tr><td>%s</td><td>%d</td></tr>' % ('ADC(0)', adc.read()))
+        cl, addr = s.accept()
+        print('client connected from', addr)
+        cl_file = cl.makefile('rwb', 0)
+        while True:
+            line = cl_file.readline()
+            if not line or line == b'\r\n':
+                break
 
-    response_dict = dict([(str(p), p.value()) for p in pins])
-    response_dict['ADC(0)'] = adc.read()
-    json_response = ujson.dumps(response_dict)
+        response_dict = dict([(str(p), p.value()) for p in pins])
+        response_dict['ADC(0)'] = adc.read()
+        json_response = ujson.dumps(response_dict)
 
-    response = html % '\n'.join(rows)
-    cl.send(json_response)
-    cl.close()
+        if file_len(f_name) < 2:
+            f_mode = 'a'
+        else:
+            f_mode = 'w'
+        with open(f_name, mode=f_mode, encoding='utf-8') as f:
+            f.write(json_response)
+            f.write('\n')
+
+        cl.send(json_response)
+        cl.close()
