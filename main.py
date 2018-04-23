@@ -12,9 +12,9 @@ s = socket.socket()
 s.bind(addr)
 s.listen(1)
 
-print('listening on', addr)
+print("listening on", addr)
 
-f_name = "pin.log"
+fname = 'pin.log'
 
 def file_len(fname):
     with open(fname) as f:
@@ -35,7 +35,7 @@ while True:
     response_dict['ADC(0)'] = adc.read()
     json_response = ujson.dumps(response_dict)
  
-    with open(f_name, mode='w', encoding='utf-8') as f:
+    with open(fname, mode='w', encoding='utf-8') as f:
         f.write(json_response)
         f.write('\n')
 
