@@ -14,6 +14,8 @@ s.listen(1)
 
 print('listening on', addr)
 
+f_name = "pin.log"
+
 while True:
     cl, addr = s.accept()
     print('client connected from', addr)
@@ -26,8 +28,8 @@ while True:
     response_dict = dict([(str(p), p.value()) for p in pins])
     response_dict['ADC(0)'] = adc.read()
     json_response = ujson.dumps(response_dict)
-
-    with open('pin.log', mode='w', encoding='utf-8') as f:
+ 
+    with open(f_name, mode='w', encoding='utf-8') as f:
         f.write(json_response)
         f.write('\n')
 
