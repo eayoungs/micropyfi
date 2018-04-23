@@ -27,5 +27,9 @@ while True:
     response_dict['ADC(0)'] = adc.read()
     json_response = ujson.dumps(response_dict)
 
+    with open('pin.log', mode='w', encoding='utf-8') as f:
+        f.write(json_response)
+        f.write('\n')
+
     cl.send(json_response)
     cl.close()
