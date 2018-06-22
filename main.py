@@ -18,6 +18,8 @@ fname = 'pin.log' # This file must exist prior to script execution
 loglen = 3
 
 def file_len(fname):
+    i = 0
+    l = 0
     with open(fname) as f:
         for i, l in enumerate(f):
             pass
